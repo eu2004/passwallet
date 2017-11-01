@@ -1,0 +1,26 @@
+1. Create model - done
+    UserAccount - POJO
+    UserAccountDAO - interface for DAO
+        UserAccountXMLDAO implementation of XML DAO
+
+2. Create ro.eu.passwallet.service - done
+    UserAccountService
+        search, delete, edit, create user accounts
+
+3. Cryptography module - done
+    encrypt/decrypt files: for user account XML file
+    integrate module with user test.ro.eu.passwallet.model.dao
+
+3. Create user interface (flex)
+    Interface like "Firefox Saved Logins" window - done
+    - add modify button - done
+    - save last accessed file to preferences - done
+    - add id column - done
+
+4. Packaging - done
+
+5. Logging
+
+6. Add passwords - done
+
+7. Create android client
