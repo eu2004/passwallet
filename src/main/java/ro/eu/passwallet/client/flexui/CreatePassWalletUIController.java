@@ -1,5 +1,9 @@
 package ro.eu.passwallet.client.flexui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -8,10 +12,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ro.eu.passwallet.client.ClientUIException;
 import ro.eu.passwallet.service.xml.XMLFileService;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class CreatePassWalletUIController {
     @FXML
@@ -37,7 +37,7 @@ public class CreatePassWalletUIController {
             System.out.println("file " + file);
             byte[] content = null;
             try {
-                content = getWalletXMLTemplateContent("resources/passwallet_xml_file_template.xml");
+                content = getWalletXMLTemplateContent("passwallet_xml_file_template.xml");
             } catch (IOException e) {
                 throw new ClientUIException(e);
             }

@@ -1,9 +1,9 @@
-package test.ro.eu.passwallet.service.crypt;
+package ro.eu.passwallet.crypt;
+
+import java.util.Arrays;
 
 import ro.eu.passwallet.service.crypt.AESHelper;
 import ro.eu.passwallet.service.crypt.CryptographyException;
-
-import java.util.Arrays;
 
 public class TestAESHelper {
     public static void main(String[] args) {
