@@ -1,13 +1,14 @@
 package test.ro.eu.passwallet.model.dao;
 
-import ro.eu.passwallet.model.UserAccount;
-import ro.eu.passwallet.service.xml.XMLFileHelper;
-
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import javax.xml.bind.JAXBException;
+
+import ro.eu.passwallet.model.UserAccount;
+import ro.eu.passwallet.service.xml.XMLFileHelper;
 
 public class TestXMLFileHelper extends CommonTest {
 
