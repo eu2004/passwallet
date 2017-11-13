@@ -1,14 +1,14 @@
-package test.ro.eu.passwallet.model.dao;
+package ro.eu.passwallet.model.dao;
 
-import ro.eu.passwallet.model.UserAccount;
-import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
-import ro.eu.passwallet.service.xml.XMLFileService;
-
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import javax.xml.bind.JAXBException;
+
+import ro.eu.passwallet.model.UserAccount;
+import ro.eu.passwallet.service.xml.XMLFileService;
 
 public class TestUserAccountXMLDAO extends CommonTest {
 

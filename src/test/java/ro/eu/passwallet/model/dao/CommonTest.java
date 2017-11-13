@@ -1,4 +1,4 @@
-package test.ro.eu.passwallet.model.dao;
+package ro.eu.passwallet.model.dao;
 
 import ro.eu.passwallet.model.UserAccount;
 
