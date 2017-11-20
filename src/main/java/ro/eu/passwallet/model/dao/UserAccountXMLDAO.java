@@ -49,10 +49,10 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
         if (name == null) {
             throw new IllegalArgumentException("name cannot be NULL!");
         }
-
-        List<UserAccount> userAccounts = allUserAccounts.stream().filter(t -> t.getName().startsWith(name)
-                || t.getNickName().startsWith(name)
-                || t.getSiteURL().contains(name)).collect(toList());
+        final String ignoreCaseName = name.toUpperCase();
+        List<UserAccount> userAccounts = allUserAccounts.stream().filter(t -> t.getName().toUpperCase().contains(ignoreCaseName)
+                || t.getNickName().toUpperCase().contains(ignoreCaseName)
+                || t.getSiteURL().toUpperCase().contains(ignoreCaseName)).collect(toList());
         if (userAccounts != null && userAccounts.size() > 0) {
             return userAccounts;
         }
@@ -83,7 +83,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
     }
 
     @Override
-    public synchronized boolean deleteUserAccountById(Integer id) {
+    public boolean deleteUserAccountById(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be NULL!");
         }
