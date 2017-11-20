@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groupId</groupId>
-    <artifactId>ro.eutm.passwallet</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>ro.eutm</groupId>
+    <artifactId>passwallet</artifactId>
+    <version>1.1</version>
 
     <properties>
         <java.version>1.8</java.version>
@@ -23,11 +23,27 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <finalName>${project.artifactId}</finalName>
+                        <outputDirectory>${project.build.directory}/dist</outputDirectory>
+                        <archive>
+                            <manifest>
+                                <mainClass>
+                                    ro.eu.passwallet.client.flexui.ApplicationLauncher
+                                </mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+                        <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
             </plugins>
