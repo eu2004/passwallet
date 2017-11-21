@@ -26,3 +26,5 @@ hs_err_pid*
 /.idea/
 /*.iml
 target/
+.svn/
+dist/jre1.8.0_144/
