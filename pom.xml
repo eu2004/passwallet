@@ -24,17 +24,55 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <finalName>${project.artifactId}</finalName>
-                        <outputDirectory>${project.build.directory}/dist</outputDirectory>
-                        <archive>
-                            <manifest>
-                                <mainClass>
-                                    ro.eu.passwallet.client.flexui.ApplicationLauncher
-                                </mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>fx-client</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <phase>package</phase>
+                            <configuration>
+                                <finalName>${project.artifactId}-fx-client</finalName>
+                                <excludes>
+                                    <exclude>**/model/**</exclude>
+                                    <exclude>**/service/**</exclude>
+                                </excludes>
+                                <outputDirectory>${project.build.directory}/dist</outputDirectory>
+                                <archive>
+                                    <manifest>
+                                        <addClasspath>true</addClasspath>
+                                        <mainClass>
+                                            ro.eu.passwallet.client.flexui.ApplicationLauncher
+                                        </mainClass>
+                                    </manifest>
+                                    <manifestEntries>
+                                        <Class-Path>${project.artifactId}-service.jar</Class-Path>
+                                    </manifestEntries>
+                                </archive>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>service</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                            <phase>package</phase>
+                            <configuration>
+                                <finalName>${project.artifactId}-service</finalName>
+                                <excludes>
+                                    <exclude>**/client/**</exclude>
+                                </excludes>
+                                <outputDirectory>${project.build.directory}/dist</outputDirectory>
+                                <archive>
+                                    <manifest>
+                                        <mainClass>
+                                            ro.eu.passwallet.client.flexui.ApplicationLauncher
+                                        </mainClass>
+                                    </manifest>
+                                </archive>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
