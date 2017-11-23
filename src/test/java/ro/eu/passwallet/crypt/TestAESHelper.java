@@ -1,11 +1,15 @@
 package ro.eu.passwallet.crypt;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import ro.eu.passwallet.service.crypt.AESHelper;
 import ro.eu.passwallet.service.crypt.CryptographyException;
+import ro.eu.passwallet.service.LoggerService;
 
 public class TestAESHelper {
+    private static final Logger logger = LoggerService.getInstance().getLogger();
+
     public static void main(String[] args) {
         try {
             AESHelper aesHelper = new AESHelper();
@@ -22,10 +26,10 @@ public class TestAESHelper {
         byte[] decryptedStringArray = aesHelper.decrypt(encryptedStringArray, pass);
         boolean testOK = Arrays.equals("decrypted string".getBytes(), decryptedStringArray);
         if (testOK) {
-            System.out.println("testEncryptDecrypt is OK!");
+            logger.info("testEncryptDecrypt is OK!");
         } else {
-            System.err.println("testEncryptDecrypt FAILED!");
-            System.err.println("decrypted string is " + new String(decryptedStringArray));
+            logger.info("testEncryptDecrypt FAILED!");
+            logger.info("decrypted string is " + new String(decryptedStringArray));
         }
     }
 
@@ -35,9 +39,9 @@ public class TestAESHelper {
         try {
             aesHelper.decrypt(encryptedStringArray, pass + "1");
         } catch (CryptographyException ex) {
-            System.out.println("testEncryptDecrypt is OK!");
+            logger.info("testEncryptDecrypt is OK!");
             return;
         }
-        System.err.println("testEncryptDecrypt FAILED!");
+        logger.info("testEncryptDecrypt FAILED!");
     }
 }

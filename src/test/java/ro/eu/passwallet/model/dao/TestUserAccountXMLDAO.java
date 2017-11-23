@@ -4,13 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
 import ro.eu.passwallet.model.UserAccount;
+import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
 public class TestUserAccountXMLDAO extends CommonTest {
+    private static final Logger logger = LoggerService.getInstance().getLogger();
 
     public static void main(String[] args) {
         try {
@@ -33,10 +36,10 @@ public class TestUserAccountXMLDAO extends CommonTest {
     private static void testDeleteUserAccountById(UserAccountXMLDAO userAccountXMLDAO) {
         boolean removed = userAccountXMLDAO.deleteUserAccountById(3);
         if (removed) {
-            System.out.println("testDeleteUserAccountById is OK");
-            System.out.println(userAccountXMLDAO.findAllUsersAccounts());
+            logger.info("testDeleteUserAccountById is OK");
+            logger.info(userAccountXMLDAO.findAllUsersAccounts().toString());
         } else {
-            System.out.println("testDeleteUserAccountById FAILED");
+            logger.info("testDeleteUserAccountById FAILED");
         }
     }
 
@@ -50,27 +53,27 @@ public class TestUserAccountXMLDAO extends CommonTest {
         Integer id = userAccountXMLDAO.createUserAccount(newUserAccount);
         UserAccount user = userAccountXMLDAO.findUserAccountById(id);
         if (user != null) {
-            System.out.println("testCreateUserAccount is OK");
-            System.out.println(user);
+            logger.info("testCreateUserAccount is OK");
+            logger.info(user.toString());
         } else {
-            System.out.println("testCreateUserAccount FAILED");
+            logger.info("testCreateUserAccount FAILED");
         }
     }
 
     private static void testFindUsersAccountsByName(UserAccountXMLDAO userAccountXMLDAO) {
         Collection<UserAccount> usersAccounts = userAccountXMLDAO.findUsersAccountsByName("nickname_");
         if (usersAccounts != null && usersAccounts.size() > 0) {
-            System.out.println(usersAccounts);
-            System.out.println("testFindUsersAccountsByName is OK");
+            logger.info(usersAccounts.toString());
+            logger.info("testFindUsersAccountsByName is OK");
         } else {
-            System.out.println("testFindUsersAccountsByName FAILED");
+            logger.info("testFindUsersAccountsByName FAILED");
         }
     }
 
     private static void testFindAllUsers(UserAccountXMLDAO userAccountXMLDAO) {
         boolean testOK = userAccountXMLDAO.findAllUsersAccounts() != null;
         if (testOK) {
-            System.out.println("testFindAllUsers is OK!");
+            logger.info("testFindAllUsers is OK!");
         } else {
             System.err.println("testFindAllUsers FAILED!");
         }
@@ -88,9 +91,9 @@ public class TestUserAccountXMLDAO extends CommonTest {
     private static void testFindUserAccountById(UserAccountXMLDAO userAccountXMLDAO) {
         UserAccount userAccount = userAccountXMLDAO.findUserAccountById(1);
         if (userAccount != null) {
-            System.out.println("Test testFindUserAccountById is OK!");
+            logger.info("Test testFindUserAccountById is OK!");
         } else {
-            System.err.println("Test testFindUserAccountById FAILED!");
+            logger.info("Test testFindUserAccountById FAILED!");
         }
     }
 }

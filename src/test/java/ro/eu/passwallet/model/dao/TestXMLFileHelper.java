@@ -4,13 +4,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
 import ro.eu.passwallet.model.UserAccount;
+import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.xml.XMLFileHelper;
 
 public class TestXMLFileHelper extends CommonTest {
+    private static final Logger logger = LoggerService.getInstance().getLogger();
 
     public static void main(String[] args) {
         try {
@@ -37,10 +40,10 @@ public class TestXMLFileHelper extends CommonTest {
         Collection<UserAccount> usersAccountsFromXml = xmlFileHelper.getAllUsersAccountsFromXML(xmlContent);
         boolean equals = usersAccounts.size() == usersAccountsFromXml.size() && usersAccounts.equals(usersAccountsFromXml);
         if (!equals) {
-            System.err.println("Test testXMLFileOperations FAILED!");
+            logger.info("Test testXMLFileOperations FAILED!");
         } else {
-            System.out.println("Test testXMLFileOperations OK!");
-            System.out.println(new String(xmlContent));
+            logger.info("Test testXMLFileOperations OK!");
+            logger.info(new String(xmlContent));
         }
     }
 
@@ -54,9 +57,9 @@ public class TestXMLFileHelper extends CommonTest {
         Collection<UserAccount> usersAccountsFromXml = xmlFileHelper.getAllUsersAccountsFromXML(xmlContent);
         boolean equals = usersAccounts.size() == usersAccountsFromXml.size() && usersAccounts.equals(usersAccountsFromXml);
         if (!equals) {
-            System.err.println("Test testConversion FAILED!");
+            logger.info("Test testConversion FAILED!");
         } else {
-            System.out.println("Test testConversion OK!");
+            logger.info("Test testConversion OK!");
         }
     }
 

@@ -15,12 +15,16 @@ import javafx.scene.layout.GridPane;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
 import ro.eu.passwallet.service.UserAccountService;
+import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class ManagePassWalletUIController implements Initializable {
+    private static final Logger logger = LoggerService.getInstance().getLogger();
+
     @FXML
     private GridPane ap;
 
@@ -40,7 +44,7 @@ public class ManagePassWalletUIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         String password = PassWalletApplicationContext.getInstance().getProperty("password");
         String walletXMLFilePath = PassWalletApplicationContext.getInstance().getProperty("wallet_file");
-        System.out.println("walletXMLFilePath " + walletXMLFilePath);
+        logger.info("walletXMLFilePath " + walletXMLFilePath);
         passWalletFile.setText(passWalletFile.getText() + " " + walletXMLFilePath);
 
         userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath)));

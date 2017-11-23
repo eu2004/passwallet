@@ -7,10 +7,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
+import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.UserAccountService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class AddUserAccountUIController {
+    private static final Logger logger = LoggerService.getInstance().getLogger();
     @FXML
     private AnchorPane ap;
 
@@ -34,7 +39,7 @@ public class AddUserAccountUIController {
     @FXML
     private void onCreate(ActionEvent event) {
         if (password.getText().trim().length() == 0 || name.getText().trim().length() == 0) {
-            System.out.println("password " + password.getText() + "; name " + name.getText());
+            logger.info("password " + password.getText() + "; name " + name.getText());
             return;
         }
 

@@ -9,12 +9,17 @@ import javafx.scene.layout.AnchorPane;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
 import ro.eu.passwallet.service.UserAccountService;
+import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EditUserAccountUIController implements Initializable {
+    private static final Logger logger = LoggerService.getInstance().getLogger();
+
     @FXML
     private AnchorPane ap;
 
@@ -38,7 +43,7 @@ public class EditUserAccountUIController implements Initializable {
     @FXML
     private void onSave(ActionEvent event) {
         if (password.getText().trim().length() == 0 || name.getText().trim().length() == 0) {
-            System.out.println("password " + password.getText() + "; name " + name.getText());
+            logger.info("invalid password " + password.getText() + "or invalid name " + name.getText());
             return;
         }
 
