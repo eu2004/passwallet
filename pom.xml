@@ -36,6 +36,7 @@
                                 <excludes>
                                     <exclude>**/model/**</exclude>
                                     <exclude>**/service/**</exclude>
+                                    <exclude>**/logging.properties</exclude>
                                 </excludes>
                                 <outputDirectory>${project.build.directory}/dist</outputDirectory>
                                 <archive>
