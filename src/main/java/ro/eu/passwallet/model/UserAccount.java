@@ -1,9 +1,10 @@
 package ro.eu.passwallet.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement
-public class UserAccount {
+public class UserAccount implements Serializable {
     private Integer id;
     private String name;
     private String password;
