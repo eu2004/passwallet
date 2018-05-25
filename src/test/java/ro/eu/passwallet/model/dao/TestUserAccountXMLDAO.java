@@ -1,16 +1,15 @@
 package ro.eu.passwallet.model.dao;
 
+import ro.eu.passwallet.model.UserAccount;
+import ro.eu.passwallet.service.LoggerService;
+import ro.eu.passwallet.service.xml.XMLFileService;
+
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Logger;
-
-import javax.xml.bind.JAXBException;
-
-import ro.eu.passwallet.model.UserAccount;
-import ro.eu.passwallet.service.LoggerService;
-import ro.eu.passwallet.service.xml.XMLFileService;
 
 public class TestUserAccountXMLDAO extends CommonTest {
     private static final Logger logger = LoggerService.getInstance().getLogger();
@@ -22,7 +21,7 @@ public class TestUserAccountXMLDAO extends CommonTest {
             xmlFile.deleteOnExit();
             XMLFileService xmlFileService = new XMLFileService("testPassword", xmlFile.getAbsolutePath());
             createXMLFile(xmlFileService);
-            UserAccountXMLDAO userAccountXMLDAO = new UserAccountXMLDAO(xmlFileService);
+            UserAccountXMLDAO userAccountXMLDAO = new UserAccountXMLDAO(xmlFileService, LoggerService.getInstance());
             testFindUserAccountById(userAccountXMLDAO);
             testFindAllUsers(userAccountXMLDAO);
             testFindUsersAccountsByName(userAccountXMLDAO);

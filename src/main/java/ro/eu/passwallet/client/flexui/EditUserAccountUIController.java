@@ -8,13 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
-import ro.eu.passwallet.service.UserAccountService;
 import ro.eu.passwallet.service.LoggerService;
+import ro.eu.passwallet.service.UserAccountService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditUserAccountUIController implements Initializable {
@@ -56,7 +55,7 @@ public class EditUserAccountUIController implements Initializable {
 
         String password = PassWalletApplicationContext.getInstance().getProperty("password");
         String walletXMLFilePath = PassWalletApplicationContext.getInstance().getProperty("wallet_file");
-        UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath)));
+        UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath), LoggerService.getInstance()));
 
         userAccountService.update(selectedUserAccount);
 

@@ -11,7 +11,6 @@ import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.UserAccountService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AddUserAccountUIController {
@@ -52,7 +51,7 @@ public class AddUserAccountUIController {
 
         String password = PassWalletApplicationContext.getInstance().getProperty("password");
         String walletXMLFilePath = PassWalletApplicationContext.getInstance().getProperty("wallet_file");
-        UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath)));
+        UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath), LoggerService.getInstance()));
 
         userAccountService.createUser(userAccount);
 

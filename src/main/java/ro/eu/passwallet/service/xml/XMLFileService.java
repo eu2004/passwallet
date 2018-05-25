@@ -7,7 +7,7 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.Collection;
 
-public class XMLFileService {
+public class XMLFileService implements IXMLFileService{
     private XMLFileHelper xmlFileHelper;
     private CryptographyService cryptographyService;
     private String xmlFilePath;

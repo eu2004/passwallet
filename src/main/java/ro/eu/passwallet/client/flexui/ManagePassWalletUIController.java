@@ -47,7 +47,7 @@ public class ManagePassWalletUIController implements Initializable {
         logger.info("walletXMLFilePath " + walletXMLFilePath);
         passWalletFile.setText(passWalletFile.getText() + " " + walletXMLFilePath);
 
-        userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath)));
+        userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath), LoggerService.getInstance()));
         final ObservableList<UserAccount> data =
                 FXCollections.observableArrayList(userAccountService.search(""));
         ObservableList<TableColumn> columns = usersAccounts.getColumns();

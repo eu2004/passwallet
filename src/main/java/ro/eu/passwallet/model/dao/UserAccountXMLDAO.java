@@ -1,32 +1,31 @@
 package ro.eu.passwallet.model.dao;
 
 import ro.eu.passwallet.model.UserAccount;
-import ro.eu.passwallet.service.LoggerService;
-import ro.eu.passwallet.service.xml.XMLFileService;
+import ro.eu.passwallet.service.ILoggerService;
+import ro.eu.passwallet.service.xml.IXMLFileService;
 import ro.eu.passwallet.service.xml.XMLFileServiceException;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static java.util.stream.Collectors.toList;
 
 public final class UserAccountXMLDAO implements IUserAccountDAO {
-    private static final Logger logger = LoggerService.getInstance().getLogger();
-    private XMLFileService xmlFileService;
+    private IXMLFileService xmlFileService;
+    private ILoggerService loggerService;
 
     private Collection<UserAccount> allUserAccounts;
 
-    public UserAccountXMLDAO(XMLFileService xmlFileService) {
+    public UserAccountXMLDAO(IXMLFileService xmlFileService, ILoggerService loggerService) {
         this.xmlFileService = xmlFileService;
+        this.loggerService = loggerService;
         try {
             synchronized (UserAccountXMLDAO.class) {
                 allUserAccounts = Collections.synchronizedCollection(xmlFileService.getAllUsersAccountsFromXML());
             }
         } catch (XMLFileServiceException e) {
-            logger.log(Level.SEVERE, e.getMessage(), e);
+            loggerService.severe(e.getMessage(), e);
             throw new DAOException(e);
         }
     }
@@ -34,7 +33,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
     @Override
     public UserAccount findUserAccountById(Integer id) {
         if (id == null) {
-            logger.severe("id cannot be NULL!");
+            loggerService.severe("id cannot be NULL!");
             throw new IllegalArgumentException("id cannot be NULL!");
         }
 
@@ -53,7 +52,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
     @Override
     public Collection<UserAccount> findUsersAccountsByName(String name) {
         if (name == null) {
-            logger.severe("name cannot be NULL!");
+            loggerService.severe("name cannot be NULL!");
             throw new IllegalArgumentException("name cannot be NULL!");
         }
         final String ignoreCaseName = name.toUpperCase();
@@ -69,7 +68,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
     @Override
     public Integer createUserAccount(UserAccount userAccount) {
         if (userAccount == null) {
-            logger.severe("userAccount cannot be NULL!");
+            loggerService.severe("userAccount cannot be NULL!");
             throw new IllegalArgumentException("userAccount cannot be NULL!");
         }
 
@@ -84,7 +83,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
             try {
                 xmlFileService.saveToXMLFile(allUserAccounts);
             } catch (XMLFileServiceException e) {
-                logger.log(Level.SEVERE, e.getMessage(), e);
+                loggerService.severe(e.getMessage(), e);
                 throw new DAOException(e);
             }
             return userAccount.getId();
@@ -94,7 +93,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
     @Override
     public boolean deleteUserAccountById(Integer id) {
         if (id == null) {
-            logger.severe("id cannot be NULL!");
+            loggerService.severe("id cannot be NULL!");
             throw new IllegalArgumentException("id cannot be NULL!");
         }
 
@@ -106,7 +105,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
                     try {
                         xmlFileService.saveToXMLFile(allUserAccounts);
                     } catch (XMLFileServiceException e) {
-                        logger.log(Level.SEVERE, e.getMessage(), e);
+                        loggerService.severe(e.getMessage(), e);
                         throw new DAOException(e);
                     }
                 }
@@ -120,7 +119,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
     @Override
     public boolean updateUserAccount(UserAccount userAccount) {
         if (userAccount == null || userAccount.getId() == null) {
-            logger.severe("userAccount[id] cannot be NULL!");
+            loggerService.severe("userAccount[id] cannot be NULL!");
             throw new IllegalArgumentException("userAccount[id] cannot be NULL!");
         }
 
@@ -135,7 +134,7 @@ public final class UserAccountXMLDAO implements IUserAccountDAO {
                 try {
                     xmlFileService.saveToXMLFile(allUserAccounts);
                 } catch (XMLFileServiceException e) {
-                    logger.log(Level.SEVERE, e.getMessage(), e);
+                    loggerService.severe(e.getMessage(), e);
                     throw new DAOException(e);
                 }
                 return true;
