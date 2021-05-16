@@ -34,3 +34,4 @@ target/classes/ro/eu/passwallet/client/flexui/edit_user_account_ui.fxml
 target/classes/ro/eu/passwallet/client/flexui/create_passwallet_ui.fxml
 target/classes/ro/eu/passwallet/client/flexui/add_user_account_ui.fxml
 .idea
+target
