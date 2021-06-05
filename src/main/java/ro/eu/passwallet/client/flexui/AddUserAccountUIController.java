@@ -33,7 +33,7 @@ public class AddUserAccountUIController {
     @FXML
     private TextField description;
 
-    private UIControllerHelper uiControllerHelper = new UIControllerHelper();
+    private final UIControllerHelper uiControllerHelper = new UIControllerHelper();
 
     @FXML
     private void onCreate(ActionEvent event) {

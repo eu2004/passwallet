@@ -12,7 +12,7 @@ import java.util.prefs.Preferences;
 
 public class UIControllerHelper {
 
-    private Preferences preferences = Preferences.userRoot().node("passwallet");
+    private final Preferences preferences = Preferences.userRoot().node("passwallet");
 
     public void launchManageWalletUIController(Pane anchorPane) {
         Stage primaryStage = (Stage) anchorPane.getScene().getWindow();

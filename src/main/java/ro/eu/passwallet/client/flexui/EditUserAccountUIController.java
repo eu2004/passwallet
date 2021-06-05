@@ -37,7 +37,7 @@ public class EditUserAccountUIController implements Initializable {
     @FXML
     private TextField description;
 
-    private UIControllerHelper uiControllerHelper = new UIControllerHelper();
+    private final UIControllerHelper uiControllerHelper = new UIControllerHelper();
 
     @FXML
     private void onSave(ActionEvent event) {

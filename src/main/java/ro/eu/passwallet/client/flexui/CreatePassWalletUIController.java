@@ -26,7 +26,7 @@ public class CreatePassWalletUIController {
     @FXML
     private PasswordField passwordId;
 
-    private UIControllerHelper uiControllerHelper = new UIControllerHelper();
+    private final UIControllerHelper uiControllerHelper = new UIControllerHelper();
 
     @FXML
     private void fileSaveButtonOnAction(ActionEvent event) {

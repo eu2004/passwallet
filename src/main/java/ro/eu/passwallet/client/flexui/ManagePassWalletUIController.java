@@ -37,7 +37,7 @@ public class ManagePassWalletUIController implements Initializable {
     @FXML
     private Label passWalletFile;
 
-    private UIControllerHelper uiControllerHelper = new UIControllerHelper();
+    private final UIControllerHelper uiControllerHelper = new UIControllerHelper();
     private UserAccountService userAccountService;
 
     @Override
@@ -54,21 +54,11 @@ public class ManagePassWalletUIController implements Initializable {
         usersAccounts.setEditable(false);
         columns.forEach(c -> {
             switch (c.getId()) {
-                case "id":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("id"));
-                    break;
-                case "nickName":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("nickName"));
-                    break;
-                case "name":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("name"));
-                    break;
-                case "site":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("siteURL"));
-                    break;
-                case "description":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("description"));
-                    break;
+                case "id" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("id"));
+                case "nickName" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("nickName"));
+                case "name" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("name"));
+                case "site" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("siteURL"));
+                case "description" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("description"));
             }
         });
 

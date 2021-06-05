@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -28,7 +27,7 @@ public class OpenPassWalletUIController implements Initializable {
     @FXML
     private PasswordField passwordId;
 
-    private UIControllerHelper uiControllerHelper = new UIControllerHelper();
+    private final UIControllerHelper uiControllerHelper = new UIControllerHelper();
 
     @FXML
     private void fileChooseButtonOnAction(ActionEvent event) {
@@ -57,14 +56,12 @@ public class OpenPassWalletUIController implements Initializable {
     @FXML
     private void createWalletOnAction(ActionEvent event) {
         Stage primaryStage = (Stage) ap.getScene().getWindow();
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("create_passwallet_ui.fxml"));
+            primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("create_passwallet_ui.fxml")), 700, 400));
+            primaryStage.show();
         } catch (IOException e) {
             throw new ClientUIException(e);
         }
-        primaryStage.setScene(new Scene(root, 700, 400));
-        primaryStage.show();
     }
 
     @Override

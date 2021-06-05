@@ -5,8 +5,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class PassWalletApplicationContext {
     private static PassWalletApplicationContext passWalletApplicationContext = new PassWalletApplicationContext();
-    private Map<String, String> properties = new ConcurrentHashMap<>();
-    private Map<String, Object> attributes = new ConcurrentHashMap<>();
+    private final Map<String, String> properties = new ConcurrentHashMap<>();
+    private final Map<String, Object> attributes = new ConcurrentHashMap<>();
 
     private PassWalletApplicationContext() {
     }
