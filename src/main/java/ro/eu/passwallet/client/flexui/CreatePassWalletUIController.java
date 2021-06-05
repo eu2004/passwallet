@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ro.eu.passwallet.client.ClientUIException;
+import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
@@ -38,9 +39,9 @@ public class CreatePassWalletUIController {
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
-            XMLFileService xmlFileService = new XMLFileService(passwordId.getText(), file.getAbsolutePath());
+            XMLFileService<UserAccount> xmlFileService = new XMLFileService<>(passwordId.getText(), file.getAbsolutePath(), UserAccount.class);
             logger.info("file " + file);
-            byte[] content = null;
+            byte[] content;
             try {
                 content = getWalletXMLTemplateContent("passwallet_xml_file_template.xml");
             } catch (IOException e) {
@@ -62,8 +63,12 @@ public class CreatePassWalletUIController {
         logger.log(Level.INFO, xmlFile.getAbsolutePath());
         byte[] content = new byte[(int) xmlFile.length()];
         try (FileInputStream xmlFileInputStream = new FileInputStream(xmlFile)) {
-            xmlFileInputStream.read(content);
-            return content;
+            int result = xmlFileInputStream.read(content);
+            if (result == -1) {
+                return null;
+            }else {
+                return content;
+            }
         }
     }
 }

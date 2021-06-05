@@ -4,14 +4,45 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ro.eutm</groupId>
+    <groupId>ro.eu.passwallet</groupId>
     <artifactId>passwallet</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
 
     <properties>
-        <java.version>1.8</java.version>
+        <maven.compiler.source>15</maven.compiler.source>
+        <maven.compiler.target>15</maven.compiler.target>
+        <encoding>UTF-8</encoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>ro.eu.passwallet</groupId>
+            <artifactId>passwallet-service</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>16</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>16</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>16</version>
+        </dependency>
+    </dependencies>
     <build>
         <resources>
             <resource>
@@ -19,74 +50,60 @@
             </resource>
         </resources>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>fx-client</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                            <phase>package</phase>
-                            <configuration>
-                                <finalName>${project.artifactId}-fx-client</finalName>
-                                <excludes>
-                                    <exclude>**/model/**</exclude>
-                                    <exclude>**/service/**</exclude>
-                                    <exclude>**/logging.properties</exclude>
-                                </excludes>
-                                <outputDirectory>${project.build.directory}/dist</outputDirectory>
-                                <archive>
-                                    <manifest>
-                                        <addClasspath>true</addClasspath>
-                                        <mainClass>
-                                            ro.eu.passwallet.client.flexui.ApplicationLauncher
-                                        </mainClass>
-                                    </manifest>
-                                    <manifestEntries>
-                                        <Class-Path>${project.artifactId}-service.jar</Class-Path>
-                                    </manifestEntries>
-                                </archive>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>service</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                            <phase>package</phase>
-                            <configuration>
-                                <finalName>${project.artifactId}-service</finalName>
-                                <excludes>
-                                    <exclude>**/client/**</exclude>
-                                </excludes>
-                                <outputDirectory>${project.build.directory}/dist</outputDirectory>
-                                <archive>
-                                    <manifest>
-                                        <mainClass>
-                                            ro.eu.passwallet.client.flexui.ApplicationLauncher
-                                        </mainClass>
-                                    </manifest>
-                                </archive>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>executable</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <finalName>${project.artifactId}-fx-client</finalName>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <mainClass>
+                                        ro.eu.passwallet.client.flexui.ApplicationLauncher
+                                    </mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/dependencies-jar</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

@@ -51,7 +51,7 @@ public class AddUserAccountUIController {
 
         String password = PassWalletApplicationContext.getInstance().getProperty("password");
         String walletXMLFilePath = PassWalletApplicationContext.getInstance().getProperty("wallet_file");
-        UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath), LoggerService.getInstance()));
+        UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService<>(password, walletXMLFilePath, UserAccount.class), LoggerService.getInstance()));
 
         userAccountService.createUser(userAccount);
 

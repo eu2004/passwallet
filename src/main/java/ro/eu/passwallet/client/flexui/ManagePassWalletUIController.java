@@ -29,7 +29,7 @@ public class ManagePassWalletUIController implements Initializable {
     private GridPane ap;
 
     @FXML
-    private TableView usersAccounts;
+    private TableView<UserAccount> usersAccounts;
 
     @FXML
     private TextField filter;
@@ -47,28 +47,18 @@ public class ManagePassWalletUIController implements Initializable {
         logger.info("walletXMLFilePath " + walletXMLFilePath);
         passWalletFile.setText(passWalletFile.getText() + " " + walletXMLFilePath);
 
-        userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService(password, walletXMLFilePath), LoggerService.getInstance()));
+        userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService<>(password, walletXMLFilePath, UserAccount.class), LoggerService.getInstance()));
         final ObservableList<UserAccount> data =
                 FXCollections.observableArrayList(userAccountService.search(""));
-        ObservableList<TableColumn> columns = usersAccounts.getColumns();
+        ObservableList<TableColumn<UserAccount, ?>> columns = usersAccounts.getColumns();
         usersAccounts.setEditable(false);
         columns.forEach(c -> {
             switch (c.getId()) {
-                case "id":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("id"));
-                    break;
-                case "nickName":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("nickName"));
-                    break;
-                case "name":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("name"));
-                    break;
-                case "site":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("siteURL"));
-                    break;
-                case "description":
-                    c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("description"));
-                    break;
+                case "id" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("id"));
+                case "nickName" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("nickName"));
+                case "name" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("name"));
+                case "site" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("siteURL"));
+                case "description" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("description"));
             }
         });
 
