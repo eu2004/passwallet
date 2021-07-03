@@ -1,11 +1,5 @@
 package ro.eu.passwallet.client.flexui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -16,6 +10,13 @@ import ro.eu.passwallet.client.ClientUIException;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.xml.XMLFileService;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class CreatePassWalletUIController {
     private static final Logger logger = LoggerService.getInstance().getLogger();
@@ -43,7 +44,7 @@ public class CreatePassWalletUIController {
             logger.info("file " + file);
             byte[] content;
             try {
-                content = getWalletXMLTemplateContent("passwallet_xml_file_template.xml");
+                content = getWalletXMLTemplateContent();
             } catch (IOException e) {
                 throw new ClientUIException(e);
             }
@@ -58,16 +59,29 @@ public class CreatePassWalletUIController {
         }
     }
 
-    private byte[] getWalletXMLTemplateContent(String xmlFilePath) throws IOException {
-        File xmlFile = new File(xmlFilePath);
-        logger.log(Level.INFO, xmlFile.getAbsolutePath());
-        byte[] content = new byte[(int) xmlFile.length()];
-        try (FileInputStream xmlFileInputStream = new FileInputStream(xmlFile)) {
-            int result = xmlFileInputStream.read(content);
-            if (result == -1) {
+    private byte[] getWalletXMLTemplateContent() throws IOException {
+        try (InputStream xmlFileInputStream = CreatePassWalletUIController.class.getClassLoader()
+                .getResourceAsStream("passwallet_xml_file_template.xml")) {
+            if (xmlFileInputStream == null) {
                 return null;
-            }else {
-                return content;
+            }
+
+            List<Byte> content = new ArrayList<>();
+            byte[] readBuffer = new byte[1024];
+            int bytesReadCount;
+            while ((bytesReadCount = xmlFileInputStream.read(readBuffer)) != -1) {
+                for (int i = 0; i < bytesReadCount; i++) {
+                    content.add(readBuffer[i]);
+                }
+            }
+            if (content.isEmpty()) {
+                return null;
+            } else {
+                byte[] contentInBytes = new byte[content.size()];
+                for (int i = 0; i < contentInBytes.length; i++) {
+                    contentInBytes[i] = content.get(i);
+                }
+                return contentInBytes;
             }
         }
     }

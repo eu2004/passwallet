@@ -38,6 +38,18 @@ public class UIControllerHelper {
         primaryStage.show();
     }
 
+    public void launchPasswordGeneratorUIController(Pane anchorPane) {
+        Stage primaryStage = (Stage) anchorPane.getScene().getWindow();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("password_generator_ui.fxml"));
+        } catch (IOException e) {
+            throw new ClientUIException(e);
+        }
+        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.show();
+    }
+
     public void launchEditAccountToWalletUIController(Pane anchorPane) {
         Stage primaryStage = (Stage) anchorPane.getScene().getWindow();
         Parent root;
