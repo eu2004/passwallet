@@ -8,11 +8,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
-import ro.eu.passwallet.service.UserAccountService;
 import ro.eu.passwallet.service.LoggerService;
+import ro.eu.passwallet.service.UserAccountService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
 import java.net.URL;
@@ -50,6 +52,7 @@ public class ManagePassWalletUIController implements Initializable {
                 FXCollections.observableArrayList(userAccountService.search(""));
         ObservableList<TableColumn> columns = usersAccounts.getColumns();
         usersAccounts.setEditable(false);
+
         columns.forEach(c -> {
             switch (c.getId()) {
                 case "id" -> c.setCellValueFactory(new PropertyValueFactory<UserAccount, String>("id"));
@@ -61,6 +64,24 @@ public class ManagePassWalletUIController implements Initializable {
         });
 
         usersAccounts.setItems(data);
+
+        ContextMenu cm = createContextMenu();
+        usersAccounts.addEventHandler(MouseEvent.MOUSE_CLICKED, t -> {
+            if(t.getButton() == MouseButton.SECONDARY) {
+                cm.show(usersAccounts, t.getScreenX(), t.getScreenY());
+            }
+        });
+    }
+
+    private ContextMenu createContextMenu() {
+        ContextMenu cm = new ContextMenu();
+        MenuItem mi1 = new MenuItem("Copy");
+        mi1.setOnAction(t -> onCopy());
+        cm.getItems().add(mi1);
+        MenuItem mi2 = new MenuItem("Copy key");
+        mi2.setOnAction(t -> onCopyKey());
+        cm.getItems().add(mi2);
+        return cm;
     }
 
     @FXML
@@ -73,6 +94,18 @@ public class ManagePassWalletUIController implements Initializable {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         content.putString(selectedRow.toString());
+        clipboard.setContent(content);
+    }
+
+    public void onCopyKey() {
+        UserAccount selectedRow = (UserAccount) usersAccounts.getSelectionModel().getSelectedItem();
+        if (selectedRow == null) {
+            return;
+        }
+
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(selectedRow.getPassword());
         clipboard.setContent(content);
     }
 
