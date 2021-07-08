@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -19,6 +16,7 @@ import ro.eu.passwallet.service.LoggerService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -85,8 +83,16 @@ public class ManagePassWalletUIController implements Initializable {
             return;
         }
 
-        usersAccounts.getItems().remove(selectedRow);
-        userAccountService.delete(selectedRow.getId());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete");
+        alert.setHeaderText("Delete user");
+        alert.setContentText("Are you sure you want to delete selected user?");
+
+        Optional<ButtonType> option = alert.showAndWait();
+        if (ButtonType.OK.equals(option.get())) {
+            usersAccounts.getItems().remove(selectedRow);
+            userAccountService.delete(selectedRow.getId());
+        }
     }
 
     @FXML
