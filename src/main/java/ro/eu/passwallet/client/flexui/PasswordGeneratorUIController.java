@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PasswordGeneratorUIController implements Initializable {
+
     private final UIControllerHelper uiControllerHelper = new UIControllerHelper();
 
     private final PasswordGenerator passwordGenerator = new PasswordGenerator();
@@ -40,13 +41,38 @@ public class PasswordGeneratorUIController implements Initializable {
     @FXML
     private Spinner<Integer> passLength;
 
+    private enum CLASSES {
+        ADDUSER(AddUserAccountUIController.class.getName()),
+        EDITUSER(EditUserAccountUIController.class.getName()),
+        UNKNOWN("");
+
+        private final String className;
+
+        CLASSES(String className) {
+            this.className = className;
+        }
+
+        public static CLASSES valueOfClassName(String className) {
+            if (className == null) {
+                return UNKNOWN;
+            }
+
+            for (CLASSES value : values()) {
+                if (value.className.equals(className)) {
+                    return value;
+                }
+            }
+            return UNKNOWN;
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        boolean isIncludeNumbers = Boolean.valueOf(uiControllerHelper.getPreference("pass.gen.use-number", String.valueOf(passwordGenerator.isIncludeNumbers())));
-        boolean isIncludeLowerCase = Boolean.valueOf(uiControllerHelper.getPreference("pass.gen.use-lower", String.valueOf(passwordGenerator.isIncludeLowerCase())));
-        boolean isIncludeUpperCase = Boolean.valueOf(uiControllerHelper.getPreference("pass.gen.use-upper", String.valueOf(passwordGenerator.isIncludeUpperCase())));
-        boolean isIncludeSymbols = Boolean.valueOf(uiControllerHelper.getPreference("pass.gen.use-symbol", String.valueOf(passwordGenerator.isIncludeSymbols())));
-        int passwordLength = Integer.valueOf(uiControllerHelper.getPreference("pass.gen.pass-length", String.valueOf(passwordGenerator.getLength())));
+        boolean isIncludeNumbers = Boolean.parseBoolean(uiControllerHelper.getPreference("pass.gen.use-number", String.valueOf(passwordGenerator.isIncludeNumbers())));
+        boolean isIncludeLowerCase = Boolean.parseBoolean(uiControllerHelper.getPreference("pass.gen.use-lower", String.valueOf(passwordGenerator.isIncludeLowerCase())));
+        boolean isIncludeUpperCase = Boolean.parseBoolean(uiControllerHelper.getPreference("pass.gen.use-upper", String.valueOf(passwordGenerator.isIncludeUpperCase())));
+        boolean isIncludeSymbols = Boolean.parseBoolean(uiControllerHelper.getPreference("pass.gen.use-symbol", String.valueOf(passwordGenerator.isIncludeSymbols())));
+        int passwordLength = Integer.parseInt(uiControllerHelper.getPreference("pass.gen.pass-length", String.valueOf(passwordGenerator.getLength())));
 
         passwordGenerator.setIncludeSymbols(isIncludeSymbols);
         passwordGenerator.setIncludeLowerCase(isIncludeLowerCase);
@@ -58,7 +84,7 @@ public class PasswordGeneratorUIController implements Initializable {
         useUpperCase.setSelected(passwordGenerator.isIncludeUpperCase());
         useLowerCase.setSelected(passwordGenerator.isIncludeLowerCase());
         useSymbols.setSelected(passwordGenerator.isIncludeSymbols());
-        if(passLength.getValueFactory() == null) {
+        if (passLength.getValueFactory() == null) {
             passLength.setValueFactory(new SpinnerValueFactory<>() {
                 @Override
                 public void decrement(int i) {
@@ -86,10 +112,15 @@ public class PasswordGeneratorUIController implements Initializable {
 
     @FXML
     private void onClose(ActionEvent event) {
-        UserAccount addUserAccount = (UserAccount) PassWalletApplicationContext.getInstance().getAttribute(
-                AddUserAccountUIController.ADD_USER_ACCOUNT);
-        addUserAccount.setPassword(password.getText());
-        uiControllerHelper.launchAddUserAccountToWalletUIController(ap);
+        UserAccount currentUserAccount = PassWalletApplicationContext.getInstance().getCurrentUserAccountAttribute();
+        currentUserAccount.setPassword(password.getText());
+
+        switch (CLASSES.valueOfClassName(PassWalletApplicationContext.getInstance().getCurrentUserAccountSourceAttribute())) {
+            case ADDUSER -> uiControllerHelper.launchAddUserAccountToWalletUIController(ap);
+            case EDITUSER -> uiControllerHelper.launchEditAccountToWalletUIController(ap);
+            default -> throw new IllegalStateException("Unexpected value: " + PassWalletApplicationContext.getInstance().getCurrentUserAccountSourceAttribute());
+        }
+
     }
 
     public void onUseNumbers() {

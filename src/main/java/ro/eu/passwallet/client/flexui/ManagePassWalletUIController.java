@@ -108,8 +108,7 @@ public class ManagePassWalletUIController implements Initializable {
         if (selectedRow == null) {
             return;
         }
-        PassWalletApplicationContext.getInstance().setAttribute("selected_user_account",
-                selectedRow);
+        PassWalletApplicationContext.getInstance().setCurrentUserAccountAttribute(ManagePassWalletUIController.class.getName(), selectedRow);
         uiControllerHelper.launchEditAccountToWalletUIController(ap);
     }
 }

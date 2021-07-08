@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 public class AddUserAccountUIController implements Initializable {
-    static final String ADD_USER_ACCOUNT = "add_user_account";
     private static final Logger logger = LoggerService.getInstance().getLogger();
 
     @FXML
@@ -42,7 +41,7 @@ public class AddUserAccountUIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UserAccount addUserAccount = (UserAccount) PassWalletApplicationContext.getInstance().getAttribute(ADD_USER_ACCOUNT);
+        UserAccount addUserAccount = PassWalletApplicationContext.getInstance().getCurrentUserAccountAttribute();
         if (addUserAccount != null) {
             password.setText(addUserAccount.getPassword());
             nickName.setText(addUserAccount.getNickName());
@@ -72,7 +71,7 @@ public class AddUserAccountUIController implements Initializable {
     }
 
     public void onGenerate(ActionEvent actionEvent) {
-        PassWalletApplicationContext.getInstance().setAttribute(ADD_USER_ACCOUNT,
+        PassWalletApplicationContext.getInstance().setCurrentUserAccountAttribute(AddUserAccountUIController.class.getName(),
                 getCurrentUserAccount());
         uiControllerHelper.launchPasswordGeneratorUIController(ap);
     }

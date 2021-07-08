@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
 <AnchorPane id="ap" fx:id="ap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.eu.passwallet.client.flexui.EditUserAccountUIController">
     <children>
         <GridPane alignment="CENTER" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
@@ -18,6 +19,10 @@
                 <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <Label alignment="CENTER" contentDisplay="CENTER" text="Password" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                 <PasswordField id="passwordId" fx:id="password" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Button mnemonicParsing="false" onAction="#onGenerate" text="Generate" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="5.0" />
+                    </GridPane.margin></Button>
                 <Label text="Site" GridPane.rowIndex="4" />
                 <TextField fx:id="site" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <Label text="Description" GridPane.rowIndex="5" />

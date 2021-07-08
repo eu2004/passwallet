@@ -1,5 +1,8 @@
 package ro.eu.passwallet.client.flexui;
 
+import ro.eu.passwallet.model.UserAccount;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,5 +40,27 @@ public final class PassWalletApplicationContext {
         }else {
             attributes.put(attributeName, attributeValue);
         }
+    }
+
+    public void setCurrentUserAccountAttribute(String source, UserAccount currentUserAccount) {
+        Map<String, Object> currentUserAccountValue = new HashMap<>();
+        currentUserAccountValue.put("source", source);
+        currentUserAccountValue.put("userAccount", currentUserAccount);
+
+        setAttribute(UIControllerHelper.CURRENT_USER_ACCOUNT, currentUserAccountValue);
+
+    }
+
+    public UserAccount getCurrentUserAccountAttribute() {
+        Map<String, Object> currentUserAccountValue = (Map<String, Object>) getAttribute(UIControllerHelper.CURRENT_USER_ACCOUNT);
+        if (currentUserAccountValue == null) {
+            return null;
+        }
+        return (UserAccount) currentUserAccountValue.get("userAccount");
+    }
+
+    public String getCurrentUserAccountSourceAttribute() {
+        Map<String, Object> currentUserAccountValue = (Map<String, Object>) getAttribute(UIControllerHelper.CURRENT_USER_ACCOUNT);
+        return (String) currentUserAccountValue.get("source");
     }
 }

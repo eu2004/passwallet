@@ -46,7 +46,7 @@ public class EditUserAccountUIController implements Initializable {
             return;
         }
 
-        UserAccount selectedUserAccount = (UserAccount) PassWalletApplicationContext.getInstance().getAttribute("selected_user_account");
+        UserAccount selectedUserAccount = PassWalletApplicationContext.getInstance().getCurrentUserAccountAttribute();
         selectedUserAccount.setDescription(description.getText());
         selectedUserAccount.setPassword(password.getText());
         selectedUserAccount.setNickName(nickName.getText());
@@ -64,11 +64,28 @@ public class EditUserAccountUIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UserAccount selectedUserAccount = (UserAccount) PassWalletApplicationContext.getInstance().getAttribute("selected_user_account");
+        UserAccount selectedUserAccount = PassWalletApplicationContext.getInstance().getCurrentUserAccountAttribute();
         password.setText(selectedUserAccount.getPassword());
         nickName.setText(selectedUserAccount.getNickName());
         name.setText(selectedUserAccount.getName());
         site.setText(selectedUserAccount.getSiteURL());
         description.setText(selectedUserAccount.getDescription());
+    }
+
+    public void onGenerate() {
+        PassWalletApplicationContext.getInstance().setCurrentUserAccountAttribute(EditUserAccountUIController.class.getName(),
+                getCurrentUserAccount());
+        uiControllerHelper.launchPasswordGeneratorUIController(ap);
+    }
+
+    private UserAccount getCurrentUserAccount() {
+        UserAccount userAccount = new UserAccount();
+        userAccount.setDescription(description.getText());
+        userAccount.setPassword(password.getText());
+        userAccount.setNickName(nickName.getText());
+        userAccount.setSiteURL(site.getText());
+        userAccount.setName(name.getText());
+        userAccount.setId(PassWalletApplicationContext.getInstance().getCurrentUserAccountAttribute().getId());
+        return userAccount;
     }
 }
