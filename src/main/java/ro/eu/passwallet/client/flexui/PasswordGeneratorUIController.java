@@ -121,6 +121,11 @@ public class PasswordGeneratorUIController implements Initializable {
             default -> throw new IllegalStateException("Unexpected value: " + PassWalletApplicationContext.getInstance().getCurrentUserAccountSourceAttribute());
         }
 
+        uiControllerHelper.setPreference("pass.gen.use-number", String.valueOf(passwordGenerator.isIncludeNumbers()));
+        uiControllerHelper.setPreference("pass.gen.use-lower", String.valueOf(passwordGenerator.isIncludeLowerCase()));
+        uiControllerHelper.setPreference("pass.gen.use-upper", String.valueOf(passwordGenerator.isIncludeUpperCase()));
+        uiControllerHelper.setPreference("pass.gen.use-symbol", String.valueOf(passwordGenerator.isIncludeSymbols()));
+        uiControllerHelper.setPreference("pass.gen.pass-length", String.valueOf(passwordGenerator.getLength()));
     }
 
     public void onUseNumbers() {
