@@ -70,6 +70,11 @@ public class AddUserAccountUIController implements Initializable {
         uiControllerHelper.launchManageWalletUIController(ap);
     }
 
+    @FXML
+    private void onCancel(ActionEvent event) {
+        uiControllerHelper.launchManageWalletUIController(ap);
+    }
+
     public void onGenerate(ActionEvent actionEvent) {
         PassWalletApplicationContext.getInstance().setCurrentUserAccountAttribute(AddUserAccountUIController.class.getName(),
                 getCurrentUserAccount());

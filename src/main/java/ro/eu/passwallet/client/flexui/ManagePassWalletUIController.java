@@ -112,6 +112,14 @@ public class ManagePassWalletUIController implements Initializable {
         clipboard.setContent(content);
     }
 
+    @FXML
+    public void onClearClipBoard() {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(" ");
+        clipboard.setContent(content);
+    }
+
     public void onCopyKey() {
         UserAccount selectedRow = (UserAccount) usersAccounts.getSelectionModel().getSelectedItem();
         if (selectedRow == null) {

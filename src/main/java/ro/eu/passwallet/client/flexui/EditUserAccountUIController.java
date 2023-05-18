@@ -62,6 +62,11 @@ public class EditUserAccountUIController implements Initializable {
         uiControllerHelper.launchManageWalletUIController(ap);
     }
 
+    @FXML
+    private void onCancel(ActionEvent event) {
+        uiControllerHelper.launchManageWalletUIController(ap);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserAccount selectedUserAccount = PassWalletApplicationContext.getInstance().getCurrentUserAccountAttribute();
