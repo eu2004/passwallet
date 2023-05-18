@@ -78,6 +78,9 @@ public class ManagePassWalletUIController implements Initializable {
         MenuItem mi1 = new MenuItem("Copy");
         mi1.setOnAction(t -> onCopy());
         cm.getItems().add(mi1);
+        MenuItem mi3 = new MenuItem("Copy user");
+        mi3.setOnAction(t -> onCopyUser());
+        cm.getItems().add(mi3);
         MenuItem mi2 = new MenuItem("Copy key");
         mi2.setOnAction(t -> onCopyKey());
         cm.getItems().add(mi2);
@@ -106,6 +109,18 @@ public class ManagePassWalletUIController implements Initializable {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         content.putString(selectedRow.getPassword());
+        clipboard.setContent(content);
+    }
+
+    public void onCopyUser() {
+        UserAccount selectedRow = (UserAccount) usersAccounts.getSelectionModel().getSelectedItem();
+        if (selectedRow == null) {
+            return;
+        }
+
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(selectedRow.getName());
         clipboard.setContent(content);
     }
 
