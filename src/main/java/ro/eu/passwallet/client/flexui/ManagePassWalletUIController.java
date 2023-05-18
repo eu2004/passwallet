@@ -18,6 +18,7 @@ import ro.eu.passwallet.service.UserAccountService;
 import ro.eu.passwallet.service.xml.XMLFileService;
 
 import java.net.URL;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -97,6 +98,17 @@ public class ManagePassWalletUIController implements Initializable {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
         final ClipboardContent content = new ClipboardContent();
         content.putString(selectedRow.toString());
+        clipboard.setContent(content);
+    }
+
+    @FXML
+    public void onCopyAll() {
+        Collection<UserAccount> userAccounts = userAccountService.search("");
+        StringBuilder all = new StringBuilder();
+        userAccounts.forEach(userAccount -> all.append(userAccount).append(System.lineSeparator()));
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(all.toString());
         clipboard.setContent(content);
     }
 
