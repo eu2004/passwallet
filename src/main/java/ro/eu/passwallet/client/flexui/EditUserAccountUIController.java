@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import ro.eu.passwallet.client.utils.FileUtils;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
 import ro.eu.passwallet.service.LoggerService;
@@ -57,6 +58,7 @@ public class EditUserAccountUIController implements Initializable {
         String walletXMLFilePath = PassWalletApplicationContext.getInstance().getProperty("wallet_file");
         UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService<>(password, walletXMLFilePath, UserAccount.class), LoggerService.getInstance()));
 
+        FileUtils.backup(walletXMLFilePath);
         userAccountService.update(selectedUserAccount);
 
         uiControllerHelper.launchManageWalletUIController(ap);

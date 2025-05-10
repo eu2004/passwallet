@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import ro.eu.passwallet.client.utils.FileUtils;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
 import ro.eu.passwallet.service.LoggerService;
@@ -65,10 +66,13 @@ public class AddUserAccountUIController implements Initializable {
         UserAccountService userAccountService = new UserAccountService(new UserAccountXMLDAO(new XMLFileService<>(password,
                 walletXMLFilePath, UserAccount.class), LoggerService.getInstance()));
 
+        FileUtils.backup(walletXMLFilePath);
         userAccountService.createUser(userAccount);
 
         uiControllerHelper.launchManageWalletUIController(ap);
     }
+
+
 
     @FXML
     private void onCancel(ActionEvent event) {

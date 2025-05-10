@@ -11,6 +11,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import ro.eu.passwallet.client.utils.FileUtils;
 import ro.eu.passwallet.model.UserAccount;
 import ro.eu.passwallet.model.dao.UserAccountXMLDAO;
 import ro.eu.passwallet.service.LoggerService;
@@ -159,6 +160,7 @@ public class ManagePassWalletUIController implements Initializable {
         Optional<ButtonType> option = alert.showAndWait();
         if (ButtonType.OK.equals(option.get())) {
             usersAccounts.getItems().remove(selectedRow);
+            FileUtils.backup(PassWalletApplicationContext.getInstance().getProperty("wallet_file"));
             userAccountService.delete(selectedRow.getId());
         }
     }
